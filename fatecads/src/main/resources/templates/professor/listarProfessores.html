@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Professores</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Gerenciar Professores</h1>
+            <p>Veja e gerencie todos os professores cadastrados no sistema.</p>
+            <a href="/professores/criar" class="btn btn-primary">Novo Professor</a>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Graduação</th>
+                            <th>RM</th>
+                            <th class="actions">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="professor : ${professores}">
+                            <td th:text="${professor.nomeProfessor}"></td>
+                            <td th:text="${professor.telefoneProfessor}"></td>
+                            <td th:text="${professor.graduacaoProfessor}"></td>
+                            <td th:text="${professor.rmProfessor}"></td>
+                            <td class="actions">
+                                <a th:href="@{/professores/editar/{id}(id=${professor.idProfessor})}" class="btn btn-secondary">Editar</a>
+                                <a th:href="@{/professores/excluir/{id}(id=${professor.idProfessor})}" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir este professor?')">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

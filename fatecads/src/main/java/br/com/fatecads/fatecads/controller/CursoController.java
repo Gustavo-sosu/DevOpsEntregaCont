@@ -9,48 +9,48 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.fatecads.fatecads.entity.Aluno;
-import br.com.fatecads.fatecads.service.AlunoService;
+import br.com.fatecads.fatecads.entity.Curso;
+import br.com.fatecads.fatecads.service.CursoService;
 
 @Controller
-@RequestMapping("/alunos")
-public class AlunoController {
+@RequestMapping("/cursos")
+public class CursoController {
 
-    //Injeção de dependência da service de alunos
+    //Injeção de dependência da service de cursos
     @Autowired
-    private AlunoService alunoService;
+    private CursoService cursoService;
 
-    //Método para salvar um aluno
+    //Método para salvar um curso
     @PostMapping("/salvar")
-    public String salvar(@ModelAttribute Aluno aluno){
-        alunoService.save(aluno);
-        return "redirect:/alunos/listar";
+    public String salvar(@ModelAttribute Curso curso){
+        cursoService.save(curso);
+        return "redirect:/cursos/listar";
     }
 
     @GetMapping("/listar")
     public String listar(Model model){
-        model.addAttribute("alunos", alunoService.findAll());
-        return "aluno/listarAlunos";
+        model.addAttribute("cursos", cursoService.findAll());
+        return "curso/listarCursos";
     }
 
     @GetMapping("/criar")
     public String criarForm(Model model){
-        model.addAttribute("aluno", new Aluno());
-        return "aluno/formularioAluno";
+        model.addAttribute("curso", new Curso());
+        return "curso/formularioCurso";
     }
 
-    //Metodo para excluir um aluno pelo ID
+    //Metodo para excluir um curso pelo ID
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable Integer id) {
-        alunoService.deleteById(id);
-        return "redirect:/alunos/listar";
+        cursoService.deleteById(id);
+        return "redirect:/cursos/listar";
     }
 
-    //Metodo para editar um aluno pelo ID
+    //Metodo para editar um curso pelo ID
     @GetMapping("/editar/{id}")
     public String editarForm(@PathVariable Integer id, Model model) {
-        Aluno aluno = alunoService.findById((id));
-        model.addAttribute("aluno", aluno);
-        return "aluno/formularioAluno";
+        Curso curso = cursoService.findById((id));
+        model.addAttribute("curso", curso);
+        return "curso/formularioCurso";
     }
 }

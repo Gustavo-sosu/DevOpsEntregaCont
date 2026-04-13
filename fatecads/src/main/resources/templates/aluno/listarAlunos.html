@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Alunos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Gerenciar Alunos</h1>
+            <p>Veja e gerencie todos os alunos cadastrados no sistema.</p>
+            <a href="/alunos/criar" class="btn btn-primary">Novo Aluno</a>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
+                            <th>CPF</th>
+                            <th>RA</th>
+                            <th class="actions">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="aluno : ${alunos}">
+                            <td th:text="${aluno.nomeAluno}"></td>
+                            <td th:text="${aluno.emailAluno}"></td>
+                            <td th:text="${aluno.telefoneAluno}"></td>
+                            <td th:text="${aluno.cpfAluno}"></td>
+                            <td th:text="${aluno.raAluno}"></td>
+                            <td class="actions">
+                                <a th:href="@{/alunos/editar/{id}(id=${aluno.idAluno})}" class="btn btn-secondary">Editar</a>
+                                <a th:href="@{/alunos/excluir/{id}(id=${aluno.idAluno})}" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir este aluno?')">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

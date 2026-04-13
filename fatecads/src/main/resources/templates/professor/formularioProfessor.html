@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${professor.idProfessor != null} ? 'Editar Professor' : 'Cadastrar Professor'">Cadastrar Professor</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1 th:text="${professor.idProfessor != null} ? 'Editar Professor' : 'Cadastrar Professor'">Cadastrar Professor</h1>
+            <p>Preencha os dados do professor abaixo.</p>
+            <form th:action="@{/professores/salvar}" method="post" th:object="${professor}">
+                <input type="hidden" th:field="*{idProfessor}">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" th:field="*{nomeProfessor}" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="text" th:field="*{telefoneProfessor}" required>
+                </div>
+                <div class="form-group">
+                    <label>Graduação</label>
+                    <input type="text" th:field="*{graduacaoProfessor}" required>
+                </div>
+                <div class="form-group">
+                    <label>RM</label>
+                    <input type="text" th:field="*{rmProfessor}" required>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <input type="submit" value="Salvar">
+                    <a href="/professores/listar" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

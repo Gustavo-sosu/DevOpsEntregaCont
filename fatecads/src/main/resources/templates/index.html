@@ -3,11 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema FatecADS</title>
+    <title>Sistema de Gestão Acadêmica</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1 style="text-align: center;">Bem vindo ao Sistema FatecADS</h1>
-    <h3 style="text-align: center;"><a href="/alunos/listar">Gerenciar alunos</a></h3>
-    
+    <div class="container">
+        <div class="card">
+            <h1>Sistema de Gestão Acadêmica</h1>
+            <p>Gerencie alunos, professores, cursos e disciplinas de forma simples e eficiente.</p>
+            <div style="display: grid; gap: 12px; margin-top: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
+                    <div>
+                        <h3 style="margin: 0; color: #1f2937;">Alunos</h3>
+                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de alunos</p>
+                    </div>
+                    <a href="/alunos/listar" class="btn btn-primary">Acessar</a>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
+                    <div>
+                        <h3 style="margin: 0; color: #1f2937;">Professores</h3>
+                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de professores</p>
+                    </div>
+                    <a href="/professores/listar" class="btn btn-primary">Acessar</a>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
+                    <div>
+                        <h3 style="margin: 0; color: #1f2937;">Cursos</h3>
+                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de cursos</p>
+                    </div>
+                    <a href="/cursos/listar" class="btn btn-primary">Acessar</a>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
+                    <div>
+                        <h3 style="margin: 0; color: #1f2937;">Disciplinas</h3>
+                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de disciplinas</p>
+                    </div>
+                    <a href="/disciplinas/listar" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

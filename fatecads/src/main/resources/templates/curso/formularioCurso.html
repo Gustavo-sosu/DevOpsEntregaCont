@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${curso.idCurso != null} ? 'Editar Curso' : 'Cadastrar Curso'">Cadastrar Curso</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1 th:text="${curso.idCurso != null} ? 'Editar Curso' : 'Cadastrar Curso'">Cadastrar Curso</h1>
+            <p>Preencha os dados do curso abaixo.</p>
+            <form th:action="@{/cursos/salvar}" method="post" th:object="${curso}">
+                <input type="hidden" th:field="*{idCurso}">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" th:field="*{nomeCurso}" required>
+                </div>
+                <div class="form-group">
+                    <label>Período</label>
+                    <input type="text" th:field="*{periodo}" required>
+                </div>
+                <div class="form-group">
+                    <label>Carga Horária</label>
+                    <input type="number" th:field="*{cargaHoraria}" required>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <input type="submit" value="Salvar">
+                    <a href="/cursos/listar" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

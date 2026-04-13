@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${disciplina.idDisciplina != null} ? 'Editar Disciplina' : 'Cadastrar Disciplina'">Cadastrar Disciplina</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1 th:text="${disciplina.idDisciplina != null} ? 'Editar Disciplina' : 'Cadastrar Disciplina'">Cadastrar Disciplina</h1>
+            <p>Preencha os dados da disciplina abaixo.</p>
+            <form th:action="@{/disciplinas/salvar}" method="post" th:object="${disciplina}">
+                <input type="hidden" th:field="*{idDisciplina}">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" th:field="*{nomeDisciplina}" required>
+                </div>
+                <div class="form-group">
+                    <label>Sigla</label>
+                    <input type="text" th:field="*{siglaDisciplina}" required>
+                </div>
+                <div class="form-group">
+                    <label>Carga Horária</label>
+                    <input type="number" th:field="*{cargaHorariaDisciplina}" required>
+                </div>
+                <div style="display: flex; gap: 12px;">
+                    <input type="submit" value="Salvar">
+                    <a href="/disciplinas/listar" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Disciplinas</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Gerenciar Disciplinas</h1>
+            <p>Veja e gerencie todas as disciplinas cadastradas no sistema.</p>
+            <a href="/disciplinas/criar" class="btn btn-primary">Nova Disciplina</a>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Sigla</th>
+                            <th>Carga Horária</th>
+                            <th class="actions">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="disciplina : ${disciplinas}">
+                            <td th:text="${disciplina.nomeDisciplina}"></td>
+                            <td th:text="${disciplina.siglaDisciplina}"></td>
+                            <td th:text="${disciplina.cargaHorariaDisciplina}"></td>
+                            <td class="actions">
+                                <a th:href="@{/disciplinas/editar/{id}(id=${disciplina.idDisciplina})}" class="btn btn-secondary">Editar</a>
+                                <a th:href="@{/disciplinas/excluir/{id}(id=${disciplina.idDisciplina})}" class="btn btn-danger" onclick="return confirm('Deseja realmente excluir esta disciplina?')">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
