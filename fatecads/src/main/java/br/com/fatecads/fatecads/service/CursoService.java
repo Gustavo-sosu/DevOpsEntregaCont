@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import br.com.fatecads.fatecads.entity.Curso;
 import br.com.fatecads.fatecads.repository.CursoRepository;
 
-
 @Service
 public class CursoService {
-    //Injeção de depencência do repositório de cursos
     @Autowired
     private CursoRepository cursoRepository;
 
@@ -20,17 +18,17 @@ public class CursoService {
         return cursoRepository.save(curso);
     }
 
-    //Método para listar todos os cursos
+    //Método para listar todos os curso
     public List<Curso> findAll(){
         return cursoRepository.findAll();
     }
 
     //Método para excluir um curso pelo ID
     public void deleteById(Integer id){
-        cursoRepository.deleteById(id);
+         cursoRepository.deleteById(id);
     }
 
-    //Método para encontrar um curso pelo ID
+    //Método para encontrar o curso pelo ID
     public Curso findById(Integer id){
         return cursoRepository.findById(id).orElse(null);
     }

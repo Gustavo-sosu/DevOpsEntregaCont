@@ -3,56 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${aluno.idAluno != null} ? 'Editar Aluno' : 'Cadastrar Aluno'">Cadastrar Aluno</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/app.css?v=cloud-20260518">
+    <title>Cadastro de Alunos</title>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1 th:text="${aluno.idAluno != null} ? 'Editar Aluno' : 'Cadastrar Aluno'">Cadastrar Aluno</h1>
-            <p>Preencha os dados do aluno abaixo.</p>
-            <form th:action="@{/alunos/salvar}" method="post" th:object="${aluno}">
-                <input type="hidden" th:field="*{idAluno}">
-                <div class="form-group">
-                    <label>Nome</label>
-                    <input type="text" th:field="*{nomeAluno}" required>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/">
+                <span class="brand-mark">ADS</span>
+                <span>Sistema Fatec ADS</span>
+            </a>
+            <nav class="nav" aria-label="Navegacao principal">
+                <a href="/alunos/listar" aria-current="page">Alunos</a>
+                <a href="/curso/listar">Cursos</a>
+                <a href="/professor/listar">Professores</a>
+                <a href="/disciplina/listar">Disciplinas</a>
+                <a href="/usuario/listar">Usuarios</a>
+            </nav>
+        </header>
+
+        <section class="page-header">
+            <div>
+                <p class="eyebrow">Modulo academico</p>
+                <h1 class="page-title">Cadastro de aluno</h1>
+                <p class="page-subtitle">Preencha os dados do aluno para salvar o cadastro.</p>
+            </div>
+        </section>
+
+        <form class="panel form-panel" th:action="@{/alunos/salvar}" method="post" th:object="${aluno}">
+            <input type="hidden" th:field="*{idAluno}">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="nomeAluno">Nome</label>
+                    <input id="nomeAluno" type="text" th:field="*{nomeAluno}" required>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" th:field="*{emailAluno}">
+                <div class="field">
+                    <label for="emailAluno">Email</label>
+                    <input id="emailAluno" type="email" th:field="*{emailAluno}">
                 </div>
-                <div class="form-group">
-                    <label>Telefone</label>
-                    <input type="text" th:field="*{telefoneAluno}" required>
+                <div class="field">
+                    <label for="telefoneAluno">Telefone</label>
+                    <input id="telefoneAluno" type="text" th:field="*{telefoneAluno}" required>
                 </div>
-                <div class="form-group">
-                    <label>Endereço</label>
-                    <input type="text" th:field="*{enderecoAluno}">
+                <div class="field">
+                    <label for="cpfAluno">CPF</label>
+                    <input id="cpfAluno" type="text" th:field="*{cpfAluno}" required>
                 </div>
-                <div class="form-group">
-                    <label>CPF</label>
-                    <input type="text" th:field="*{cpfAluno}" required>
+                <div class="field field-full">
+                    <label for="enderecoAluno">Endereco</label>
+                    <input id="enderecoAluno" type="text" th:field="*{enderecoAluno}" required>
                 </div>
-                <div class="form-group">
-                    <label>RA</label>
-                    <input type="text" th:field="*{raAluno}" required>
+                <div class="field">
+                    <label for="raAluno">RA</label>
+                    <input id="raAluno" type="text" th:field="*{raAluno}" required>
                 </div>
-                <div class="form-group">
-                    <label>Curso</label>
-                    <select th:field="*{curso}">
-                        <option value="" disabled selected>Selecione um curso</option>
+                <div class="field">
+                    <label for="curso">Curso</label>
+                    <select id="curso" th:field="*{curso}" required>
+                        <option value="">Selecione um curso</option>
                         <option th:each="curso : ${cursos}"
-                                th:text="${curso.nomeCurso}"
-                                th:value="${curso.idCurso}">
+                                th:value="${curso.idCurso}"
+                                th:text="${curso.nomeCurso}">
                         </option>
                     </select>
                 </div>
-                <div style="display: flex; gap: 12px;">
-                    <input type="submit" value="Salvar">
-                    <a href="/alunos/listar" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
+            <div class="form-actions">
+                <button class="button button-primary" type="submit">Salvar</button>
+                <a class="button" href="/alunos/listar">Voltar</a>
+            </div>
+        </form>
+    </main>
 </body>
 </html>

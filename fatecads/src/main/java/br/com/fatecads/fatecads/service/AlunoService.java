@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import br.com.fatecads.fatecads.entity.Aluno;
 import br.com.fatecads.fatecads.repository.AlunoRepository;
 
-
 @Service
 public class AlunoService {
     //Injeção de depencência do repositório de alunos
@@ -27,10 +26,10 @@ public class AlunoService {
 
     //Método para excluir um aluno pelo ID
     public void deleteById(Integer id){
-        alunoRepository.deleteById(id);
+         alunoRepository.deleteById(id);
     }
 
-    //Método para encontrar um aluno pelo ID
+    //Método para encontrar o aluno pelo ID
     public Aluno findById(Integer id){
         return alunoRepository.findById(id).orElse(null);
     }

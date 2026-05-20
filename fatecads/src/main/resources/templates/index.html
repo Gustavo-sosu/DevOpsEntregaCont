@@ -3,45 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão Acadêmica</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/app.css?v=cloud-20260518">
+    <title>FatecAds - Sistema Academico</title>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1>Sistema de Gestão Acadêmica</h1>
-            <p>Gerencie alunos, professores, cursos e disciplinas de forma simples e eficiente.</p>
-            <div style="display: grid; gap: 12px; margin-top: 24px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
-                    <div>
-                        <h3 style="margin: 0; color: #1f2937;">Alunos</h3>
-                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de alunos</p>
-                    </div>
-                    <a href="/alunos/listar" class="btn btn-primary">Acessar</a>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
-                    <div>
-                        <h3 style="margin: 0; color: #1f2937;">Professores</h3>
-                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de professores</p>
-                    </div>
-                    <a href="/professores/listar" class="btn btn-primary">Acessar</a>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
-                    <div>
-                        <h3 style="margin: 0; color: #1f2937;">Cursos</h3>
-                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de cursos</p>
-                    </div>
-                    <a href="/cursos/listar" class="btn btn-primary">Acessar</a>
-                </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px;">
-                    <div>
-                        <h3 style="margin: 0; color: #1f2937;">Disciplinas</h3>
-                        <p style="margin: 4px 0 0; color: #6b7280; font-size: 0.9rem;">Gerenciar cadastro de disciplinas</p>
-                    </div>
-                    <a href="/disciplinas/listar" class="btn btn-primary">Acessar</a>
-                </div>
+    <main class="auth-shell">
+        <section class="panel auth-card" aria-labelledby="start-title">
+            <a class="brand" href="/fatecads">
+                <span class="brand-mark">ADS</span>
+                <span>Sistema Fatec ADS</span>
+            </a>
+
+            <p class="eyebrow">Cloud console</p>
+            <h1 id="start-title" class="auth-title">Sistema academico</h1>
+            <p class="auth-subtitle">Acesse o painel administrativo ou crie um novo usuario para operar os cadastros.</p>
+
+            <div class="auth-actions">
+                <a class="button button-primary" href="/login">Acessar o sistema</a>
+                <a class="button" href="/usuario/criar">Cadastrar novo usuario</a>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 </body>
 </html>

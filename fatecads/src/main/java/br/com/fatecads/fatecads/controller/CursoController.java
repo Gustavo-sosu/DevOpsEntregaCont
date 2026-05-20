@@ -11,20 +11,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.fatecads.fatecads.entity.Curso;
 import br.com.fatecads.fatecads.service.CursoService;
+import br.com.fatecads.fatecads.service.DisciplinaService;
 
 @Controller
-@RequestMapping("/cursos")
+@RequestMapping("/curso")
 public class CursoController {
 
-    //Injeção de dependência da service de cursos
+ //Injeção de dependência da service de alunos
     @Autowired
     private CursoService cursoService;
+
+    @Autowired
+    private DisciplinaService disciplinaService;
 
     //Método para salvar um curso
     @PostMapping("/salvar")
     public String salvar(@ModelAttribute Curso curso){
         cursoService.save(curso);
-        return "redirect:/cursos/listar";
+        return "redirect:/curso/listar";
     }
 
     @GetMapping("/listar")
@@ -33,24 +37,27 @@ public class CursoController {
         return "curso/listarCursos";
     }
 
+    //Método para criar um novo aluno e abrir o formulário
     @GetMapping("/criar")
-    public String criarForm(Model model){
+    public String criarForm(Model model) {
         model.addAttribute("curso", new Curso());
+        model.addAttribute("disciplinas", disciplinaService.findAll());
         return "curso/formularioCurso";
     }
 
-    //Metodo para excluir um curso pelo ID
+    //Método para excluir uma aluno por ID
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable Integer id) {
         cursoService.deleteById(id);
-        return "redirect:/cursos/listar";
+        return "redirect:/curso/listar";
     }
-
-    //Metodo para editar um curso pelo ID
+    
+    //Método para editar um aluno pelo ID
     @GetMapping("/editar/{id}")
     public String editarForm(@PathVariable Integer id, Model model) {
-        Curso curso = cursoService.findById((id));
+        Curso curso = cursoService.findById(id);
         model.addAttribute("curso", curso);
+        model.addAttribute("disciplinas", disciplinaService.findAll());
         return "curso/formularioCurso";
     }
 }

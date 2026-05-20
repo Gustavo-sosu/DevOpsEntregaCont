@@ -3,38 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${professor.idProfessor != null} ? 'Editar Professor' : 'Cadastrar Professor'">Cadastrar Professor</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/app.css?v=cloud-20260518">
+    <title>Cadastro de Professores</title>
 </head>
 <body>
-    <div class="container">
-        <div class="card">
-            <h1 th:text="${professor.idProfessor != null} ? 'Editar Professor' : 'Cadastrar Professor'">Cadastrar Professor</h1>
-            <p>Preencha os dados do professor abaixo.</p>
-            <form th:action="@{/professores/salvar}" method="post" th:object="${professor}">
-                <input type="hidden" th:field="*{idProfessor}">
-                <div class="form-group">
-                    <label>Nome</label>
-                    <input type="text" th:field="*{nomeProfessor}" required>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/">
+                <span class="brand-mark">ADS</span>
+                <span>Sistema Fatec ADS</span>
+            </a>
+            <nav class="nav" aria-label="Navegacao principal">
+                <a href="/alunos/listar">Alunos</a>
+                <a href="/curso/listar">Cursos</a>
+                <a href="/professor/listar" aria-current="page">Professores</a>
+                <a href="/disciplina/listar">Disciplinas</a>
+                <a href="/usuario/listar">Usuarios</a>
+            </nav>
+        </header>
+
+        <section class="page-header">
+            <div>
+                <p class="eyebrow">Modulo academico</p>
+                <h1 class="page-title">Cadastro de professor</h1>
+                <p class="page-subtitle">Preencha os dados profissionais do professor.</p>
+            </div>
+        </section>
+
+        <form class="panel form-panel" th:action="@{/professor/salvar}" method="post" th:object="${professor}">
+            <input type="hidden" th:field="*{idProfessor}">
+            <div class="form-grid">
+                <div class="field">
+                    <label for="nomeProfessor">Nome</label>
+                    <input id="nomeProfessor" type="text" th:field="*{nomeProfessor}" required>
                 </div>
-                <div class="form-group">
-                    <label>Telefone</label>
-                    <input type="text" th:field="*{telefoneProfessor}" required>
+                <div class="field">
+                    <label for="telefoneProfessor">Telefone</label>
+                    <input id="telefoneProfessor" type="text" th:field="*{telefoneProfessor}" required>
                 </div>
-                <div class="form-group">
-                    <label>Graduação</label>
-                    <input type="text" th:field="*{graduacaoProfessor}" required>
+                <div class="field">
+                    <label for="graduacaoProfessor">Graduacao</label>
+                    <input id="graduacaoProfessor" type="text" th:field="*{graduacaoProfessor}" required>
                 </div>
-                <div class="form-group">
-                    <label>RM</label>
-                    <input type="text" th:field="*{rmProfessor}" required>
+                <div class="field">
+                    <label for="rmProfessor">RM</label>
+                    <input id="rmProfessor" type="text" th:field="*{rmProfessor}" required>
                 </div>
-                <div style="display: flex; gap: 12px;">
-                    <input type="submit" value="Salvar">
-                    <a href="/professores/listar" class="btn btn-secondary">Cancelar</a>
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
+            <div class="form-actions">
+                <button class="button button-primary" type="submit">Salvar</button>
+                <a class="button" href="/professor/listar">Voltar</a>
+            </div>
+        </form>
+    </main>
 </body>
 </html>

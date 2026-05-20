@@ -8,30 +8,24 @@ import org.springframework.stereotype.Service;
 import br.com.fatecads.fatecads.entity.Disciplina;
 import br.com.fatecads.fatecads.repository.DisciplinaRepository;
 
-
 @Service
 public class DisciplinaService {
-    //Injeção de depencência do repositório de disciplinas
     @Autowired
     private DisciplinaRepository disciplinaRepository;
 
-    //Método para salvar uma disciplina
-    public Disciplina save(Disciplina disciplina){
+    public Disciplina save(Disciplina disciplina) {
         return disciplinaRepository.save(disciplina);
     }
 
-    //Método para listar todas as disciplinas
-    public List<Disciplina> findAll(){
+    public List<Disciplina> findAll() {
         return disciplinaRepository.findAll();
     }
 
-    //Método para excluir uma disciplina pelo ID
-    public void deleteById(Integer id){
+    public void deleteById(Integer id) {
         disciplinaRepository.deleteById(id);
     }
 
-    //Método para encontrar uma disciplina pelo ID
-    public Disciplina findById(Integer id){
+    public Disciplina findById(Integer id) {
         return disciplinaRepository.findById(id).orElse(null);
     }
 }
