@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Produto</title>
+</head>
+<body>
+    <h1 style="text-align: center;">Cadastro de Produto</h1>
+    <form th:action="@{/produto/salvar}" method="post" th:object="${produto}">
+        <input type="hidden" name="idProduto" th:field="*{idProduto}"/>
+        <label for="descricaoProduto">Descrição do produto</label>
+        <input type="descricaoProduto" id="descricaoProduto" name="descricaoProduto"/>
+        <br /><br />
+        <label for="valorProduto">Valor</label>
+        <input type="valorProduto" id="valorProduto" name="valorProduto"/>
+        <br /><br />
+        <label for="unidadeProduto"> Unidade</label>
+        <input type="unidadeProduto" id="unidadeProduto" name="unidadeProduto"/>
+        <br /><br />
+        <label for="marcaProduto">Marca</label>
+        <input type="marcaProduto" id="marcaProduto" name="marcaProduto"/>
+        <br /><br />
+        <input type="submit" value="Salvar"/>
+    </form>
+</body>
+</html>
