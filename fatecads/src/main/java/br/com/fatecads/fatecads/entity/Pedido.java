@@ -50,6 +50,5 @@ public class Pedido {
     public void atualizarTotal() { 
         this.totalPedido = calcularTotal();
     }
-    //Adicionar atualizar total do pedido
 
 }
