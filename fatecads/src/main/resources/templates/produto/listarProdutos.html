@@ -20,12 +20,13 @@
         <tr th:each="produto : ${produtos}">
             <td th:text="${produto.descricaoProduto}"></td>
             <td th:text="${produto.valorProduto}"></td>
-            <td th:text="${produto.unidadeProduto}"></td>
+            <td th:text="${produto.unidadeMedida}"></td>
             <td th:text="${produto.marcaProduto}"></td>
 
             <td>
                 <a th:href="@{/produto/editar/{id}(id=${produto.idProduto})}">Editar</a>
                 <a th:href="@{/produto/excluir/{id}(id=${produto.idProduto})}">Excluir</a>
+            </td>
         </tr>
     </table>
     

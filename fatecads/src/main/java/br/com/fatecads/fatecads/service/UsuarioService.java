@@ -1,6 +1,7 @@
 package br.com.fatecads.fatecads.service;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,7 +18,22 @@ public class UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     public Usuario save(Usuario usuario) {
-        usuario.setSenhaUsuario(passwordEncoder.encode(usuario.getSenhaUsuario()));
+        if (usuario == null) {
+            throw new IllegalArgumentException("Usuário não pode ser nulo.");
+        }
+
+        if (usuario.getLoginUsuario() != null) {
+            usuario.setLoginUsuario(usuario.getLoginUsuario().trim().toLowerCase(Locale.ROOT));
+        }
+
+        if (usuario.getRole() == null || usuario.getRole().isBlank()) {
+            usuario.setRole("ROLE_USER");
+        }
+
+        if (usuario.getSenhaUsuario() != null && !usuario.getSenhaUsuario().isBlank()) {
+            usuario.setSenhaUsuario(passwordEncoder.encode(usuario.getSenhaUsuario()));
+        }
+
         return usuarioRepository.save(usuario);
     }
 

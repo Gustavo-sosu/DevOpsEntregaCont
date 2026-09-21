@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css?v=cloud-20260518">
+    <title>Lista de Pedidos</title>
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/">
+                <span class="brand-mark">ADS</span>
+                <span>Sistema Fatec ADS</span>
+            </a>
+            <nav class="nav" aria-label="Navegacao principal">
+                <a href="/alunos/listar">Alunos</a>
+                <a href="/curso/listar">Cursos</a>
+                <a href="/professor/listar">Professores</a>
+                <a href="/disciplina/listar">Disciplinas</a>
+                <a href="/usuario/listar">Usuarios</a>
+                <a href="/produto/listar">Produtos</a>
+                <a href="/pedido/listar" aria-current="page">Pedidos</a>
+            </nav>
+        </header>
+
+        <section class="page-header">
+            <div>
+                <p class="eyebrow">Gestão comercial</p>
+                <h1 class="page-title">Pedidos</h1>
+                <p class="page-subtitle">Acompanhe os pedidos cadastrados no sistema.</p>
+            </div>
+            <a class="button button-primary" href="/pedido/criar">Novo pedido</a>
+        </section>
+
+        <section class="panel">
+            <div class="panel-header">
+                <div>
+                    <h2 class="panel-title">Pedidos cadastrados</h2>
+                    <p class="panel-caption">Lista de pedidos com aluno, data e total.</p>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Aluno</th>
+                            <th>Data</th>
+                            <th>Total</th>
+                            <th>Imagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="pedido : ${pedidos}">
+                            <td th:text="${pedido.idPedido}">-</td>
+                            <td th:text="${pedido.aluno != null ? pedido.aluno.nomeAluno : 'Aluno não informado'}">-</td>
+                            <td th:text="${pedido.dataPedido}">-</td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(pedido.totalPedido, 1, 'POINT', 2, 'COMMA')}">-</td>
+                            <td>
+                                <img th:if="${pedido.imagemPedido != null}"
+                                    th:src="${pedido.imagemPedido}"
+                                    alt="Imagem do pedido"
+                                    style="max-width: 80px; max-height: 60px; object-fit: contain;" />
+                                <span th:if="${pedido.imagemPedido == null}">Sem imagem</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="empty-state" th:if="${#lists.isEmpty(pedidos)}">Nenhum pedido cadastrado.</div>
+        </section>
+    </main>
+</body>
+</html>

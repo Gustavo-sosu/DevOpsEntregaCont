@@ -18,11 +18,16 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(
+                                                                "/",
+                                                                "/index",
+                                                                "/home",
                                                                 "/login",
                                                                 "/fatecads",
                                                                 "/css/**",
                                                                 "/images/**",
-                                                                "/usuario/**")
+                                                                "/usuario/**",
+                                                                "/produto/**",
+                                                                "/pedido/**")
                                                 .permitAll()
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
