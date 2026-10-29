@@ -3,6 +3,7 @@ package br.com.fatecads.fatecads.service;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import br.com.fatecads.fatecads.entity.ItemDoPedido;
 import br.com.fatecads.fatecads.entity.Pedido;
 import br.com.fatecads.fatecads.entity.Produto;
 import br.com.fatecads.fatecads.repository.Pedidorepository;
+import br.com.fatecads.fatecads.repository.ItemDoPedidoRepository;
 import br.com.fatecads.fatecads.repository.ProdutoRepository;
 
 @Service
@@ -21,8 +23,18 @@ public class PedidoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private ItemDoPedidoRepository itemDoPedidoRepository;
+
     public List<Pedido> findAll() {
         return pedidoRepository.findAll();
+    }
+
+    public Optional<Pedido> findDetalhadoById(Integer id) {
+        return pedidoRepository.findWithUsuarioByIdPedido(id).map(pedido -> {
+            pedido.setItens(itemDoPedidoRepository.findByPedido_IdPedido(id));
+            return pedido;
+        });
     }
 
     //Método para criar um pedido

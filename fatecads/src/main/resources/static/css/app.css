@@ -260,6 +260,59 @@ button {
     overflow: hidden;
 }
 
+.product-card-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.product-image-thumb {
+    display: block;
+    width: 84px;
+    height: 72px;
+    object-fit: contain;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.product-detail-image {
+    display: block;
+    width: 100%;
+    max-height: 380px;
+    margin-bottom: var(--space-4);
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    background: #ffffff;
+}
+
+.product-form-preview {
+    width: min(100%, 360px);
+    height: 220px;
+    object-fit: contain;
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.product-form-preview.is-empty {
+    display: none;
+}
+
+.cart-product-cell {
+    display: table-cell;
+}
+
+.cart-product-cell .product-image-thumb {
+    display: inline-block;
+    margin-right: var(--space-2);
+    vertical-align: middle;
+}
+
 .menu-card::before {
     content: "";
     position: absolute;
@@ -414,6 +467,60 @@ select {
     margin-top: var(--space-6);
 }
 
+.order-form {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: var(--space-5);
+}
+
+.order-items-heading {
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-3);
+}
+
+.order-item-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(140px, 220px) auto;
+    align-items: end;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.order-add-button {
+    white-space: nowrap;
+}
+
+.order-table-wrap {
+    box-shadow: none;
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-4) 0;
+    color: var(--text-secondary);
+}
+
+.order-total strong {
+    color: var(--text-primary);
+    font-size: 20px;
+}
+
+@media (max-width: 720px) {
+    .order-form {
+        padding: var(--space-3);
+    }
+
+    .order-item-entry {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .order-add-button {
+        width: 100%;
+    }
+}
+
 .table-wrap {
     width: 100%;
     overflow-x: auto;
@@ -480,6 +587,11 @@ tr:last-child td {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
+}
+
+.table-actions {
+    align-items: center;
+    min-height: 48px;
 }
 
 .badge {

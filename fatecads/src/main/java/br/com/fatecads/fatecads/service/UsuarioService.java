@@ -30,10 +30,36 @@ public class UsuarioService {
             usuario.setRole("ROLE_USER");
         }
 
-        if (usuario.getSenhaUsuario() != null && !usuario.getSenhaUsuario().isBlank()) {
+        if (usuario.getIdUsuario() != null && (usuario.getSenhaUsuario() == null
+                || usuario.getSenhaUsuario().isBlank())) {
+            Usuario usuarioAtual = findById(usuario.getIdUsuario());
+            if (usuarioAtual != null) {
+                usuario.setSenhaUsuario(usuarioAtual.getSenhaUsuario());
+            }
+        } else if (usuario.getSenhaUsuario() != null && !usuario.getSenhaUsuario().isBlank()
+                && !usuario.getSenhaUsuario().startsWith("$2a$")) {
             usuario.setSenhaUsuario(passwordEncoder.encode(usuario.getSenhaUsuario()));
         }
 
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario register(Usuario usuario) {
+        if (usuario == null || usuario.getLoginUsuario() == null || usuario.getLoginUsuario().isBlank()) {
+            throw new IllegalArgumentException("Login é obrigatório.");
+        }
+
+        String login = usuario.getLoginUsuario().trim().toLowerCase(Locale.ROOT);
+        if (usuarioRepository.existsByLoginUsuario(login)) {
+            throw new IllegalArgumentException("Este login já está cadastrado.");
+        }
+
+        usuario.setIdUsuario(null);
+        usuario.setLoginUsuario(login);
+        if (!"ROLE_ADMIN".equals(usuario.getRole()) && !"ROLE_USER".equals(usuario.getRole())) {
+            usuario.setRole("ROLE_USER");
+        }
+        usuario.setSenhaUsuario(passwordEncoder.encode(usuario.getSenhaUsuario()));
         return usuarioRepository.save(usuario);
     }
 

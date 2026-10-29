@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 public class SecurityConfig {
@@ -20,25 +21,41 @@ public class SecurityConfig {
                                                 .requestMatchers(
                                                                 "/",
                                                                 "/index",
-                                                                "/home",
                                                                 "/login",
-                                                                "/fatecads",
+                                                                "/cadastro",
+                                                                "/cadastro/salvar",
+                                                                "/acesso-negado",
                                                                 "/css/**",
-                                                                "/images/**",
-                                                                "/usuario/**",
-                                                                "/produto/**",
-                                                                "/pedido/**")
+                                                                "/images/**")
                                                 .permitAll()
+                                                .requestMatchers("/produto/listar")
+                                                .authenticated()
+                                                .requestMatchers("/produto/detalhes/**", "/carrinho/**")
+                                                .hasRole("USER")
+                                                .requestMatchers("/home", "/fatecads", "/alunos/**", "/curso/**",
+                                                                "/professor/**", "/disciplina/**", "/usuario/**",
+                                                                "/produto/**", "/pedido/**")
+                                                .hasRole("ADMIN")
                                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")
-                                                .defaultSuccessUrl("/home", true)
+                                                .successHandler(authenticationSuccessHandler())
                                                 .permitAll())
                                 .logout(logout -> logout
                                                 .logoutSuccessUrl("/login?logout")
-                                                .permitAll());
+                                                .permitAll())
+                                .exceptionHandling(exception -> exception.accessDeniedPage("/acesso-negado"));
 
                 return http.build();
+        }
+
+        @Bean
+        public AuthenticationSuccessHandler authenticationSuccessHandler() {
+                return (request, response, authentication) -> {
+                        boolean isAdmin = authentication.getAuthorities().stream()
+                                        .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
+                        response.sendRedirect(isAdmin ? "/home" : "/produto/listar");
+                };
         }
 
         @Bean

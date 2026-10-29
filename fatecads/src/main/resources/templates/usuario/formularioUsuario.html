@@ -26,7 +26,7 @@
             <div>
                 <p class="eyebrow">Controle de acesso</p>
                 <h1 class="page-title">Cadastro de usuario</h1>
-                <p class="page-subtitle">Crie um acesso com login, senha e perfil de permissao.</p>
+                <p class="page-subtitle">O administrador pode criar usuarios comuns ou outros administradores.</p>
             </div>
         </section>
 
@@ -54,7 +54,9 @@
                 </div>
                 <div class="field field-full">
                     <label for="senhaUsuario">Senha</label>
-                    <input id="senhaUsuario" type="password" th:field="*{senhaUsuario}" autocomplete="new-password" required>
+                          <input id="senhaUsuario" type="password" th:field="*{senhaUsuario}" autocomplete="new-password"
+                              th:required="${usuario.idUsuario == null}"
+                              th:placeholder="${usuario.idUsuario != null ? 'Deixe em branco para manter a senha atual' : ''}">
                 </div>
             </div>
             <div class="form-actions">

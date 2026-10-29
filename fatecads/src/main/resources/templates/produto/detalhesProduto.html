@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css?v=product-image-20260928">
+    <title>Detalhes do produto</title>
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/produto/listar"><span class="brand-mark">ADS</span><span>Produtos</span></a>
+            <nav class="nav" aria-label="Navegacao do catalogo">
+                <a href="/produto/listar">Catalogo</a>
+                <a href="/carrinho">Carrinho</a>
+            </nav>
+        </header>
+        <section class="panel form-panel" th:if="${produto != null}">
+            <img th:if="${produto.imagemProduto != null and !#strings.isEmpty(produto.imagemProduto)}"
+                 class="product-detail-image" th:src="${produto.imagemProduto}" alt="Imagem do produto">
+            <p class="eyebrow" th:text="${produto.marcaProduto}">Marca</p>
+            <h1 class="page-title" th:text="${produto.descricaoProduto}">Produto</h1>
+            <p class="page-subtitle">Unidade de venda: <strong th:text="${produto.unidadeMedida}">UN</strong></p>
+            <h2 th:text="${'R$ ' + #numbers.formatDecimal(produto.valorProduto, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</h2>
+            <form class="form-actions" th:action="@{/carrinho/adicionar/{id}(id=${produto.idProduto})}" method="post">
+                <label for="quantidade">Quantidade</label>
+                <input id="quantidade" name="quantidade" type="number" min="1" value="1" required>
+                <button class="button button-primary" type="submit">Adicionar ao carrinho</button>
+                <a class="button" href="/produto/listar">Voltar ao catalogo</a>
+            </form>
+        </section>
+        <section class="panel" th:if="${produto == null}">
+            <h1 class="page-title">Produto nao encontrado</h1>
+            <a class="button" href="/produto/listar">Voltar ao catalogo</a>
+        </section>
+    </main>
+</body>
+</html>

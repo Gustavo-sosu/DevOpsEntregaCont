@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css?v=cloud-20260518">
+    <title>Acesso negado</title>
+</head>
+<body>
+    <main class="auth-shell">
+        <section class="panel auth-card" aria-labelledby="acesso-negado-title">
+            <a class="brand" href="/">
+                <span class="brand-mark">ADS</span>
+                <span>Sistema Fatec ADS</span>
+            </a>
+            <p class="eyebrow">Permissao insuficiente</p>
+            <h1 id="acesso-negado-title" class="auth-title">Acesso restrito</h1>
+            <p class="auth-subtitle">Sua conta foi autenticada, mas apenas usuarios administradores podem acessar as telas do sistema.</p>
+            <div class="auth-actions">
+                <form th:action="@{/logout}" method="post">
+                    <button class="button button-primary" type="submit">Sair</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
