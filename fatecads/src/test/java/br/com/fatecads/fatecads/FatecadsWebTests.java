@@ -6,6 +6,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import br.com.fatecads.fatecads.entity.Aluno;
+import br.com.fatecads.fatecads.entity.ItemDoPedido;
+import br.com.fatecads.fatecads.entity.Pedido;
+import br.com.fatecads.fatecads.entity.Produto;
+
 import br.com.fatecads.fatecads.entity.Curso;
 import br.com.fatecads.fatecads.entity.Disciplina;
 import br.com.fatecads.fatecads.entity.Professor;
@@ -13,6 +18,8 @@ import br.com.fatecads.fatecads.repository.AlunoRepository;
 import br.com.fatecads.fatecads.repository.CursoRepository;
 import br.com.fatecads.fatecads.repository.DisciplinaRepository;
 import br.com.fatecads.fatecads.repository.ProfessorRepository;
+import br.com.fatecads.fatecads.repository.Pedidorepository;
+import br.com.fatecads.fatecads.repository.ProdutoRepository;
 import br.com.fatecads.fatecads.repository.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,6 +51,12 @@ class FatecadsWebTests {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+        @Autowired
+        private ProdutoRepository produtoRepository;
+
+        @Autowired
+        private Pedidorepository pedidoRepository;
 
     private MockMvc mockMvc;
 
@@ -166,5 +179,56 @@ class FatecadsWebTests {
 
         assertTrue(usuarioRepository.findAll().stream()
                 .anyMatch(usuario -> "usuario.teste".equals(usuario.getLoginUsuario())));
+    }
+
+    @Test
+    void savesProduto() throws Exception {
+        mockMvc.perform(post("/produto/salvar")
+                        .param("descricaoProduto", "Caderno")
+                        .param("valorProduto", "12.50")
+                        .param("unidadeMedida", "UN")
+                        .param("marcaProduto", "Fatec"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/produto/listar"));
+
+        assertTrue(produtoRepository.findAll().stream()
+                .anyMatch(produto -> "UN".equals(produto.getUnidadeMedida())));
+    }
+
+    @Test
+    void savesPedidoWithProdutoAndAluno() throws Exception {
+        Aluno aluno = new Aluno();
+        aluno.setNomeAluno("Aluno Pedido");
+        aluno.setTelefoneAluno("11999999999");
+        aluno.setEnderecoAluno("Rua do Pedido");
+        aluno.setCpfAluno("12345678901");
+        aluno.setRaAluno("RA002");
+        aluno = alunoRepository.save(aluno);
+
+        Produto produto = new Produto();
+        produto.setDescricaoProduto("Caneta");
+        produto.setValorProduto(3.50);
+        produto.setUnidadeMedida("UN");
+        produto.setMarcaProduto("Fatec");
+        produto = produtoRepository.save(produto);
+
+        ItemDoPedido item = new ItemDoPedido();
+        item.setProduto(produto);
+        item.setQuantidade(2);
+
+        Pedido pedido = new Pedido();
+        pedido.setAluno(aluno);
+        pedido.setItens(java.util.List.of(item));
+
+        mockMvc.perform(post("/pedido")
+                        .contentType("application/json")
+                        .content("{\"aluno\":{\"idAluno\":" + aluno.getIdAluno()
+                                + "},\"itens\":[{\"produto\":{\"idProduto\":"
+                                + produto.getIdProduto() + "},\"quantidade\":2}]}"))
+                .andExpect(status().isOk());
+
+        assertTrue(pedidoRepository.findAll().stream()
+                .anyMatch(savedPedido -> savedPedido.getTotalPedido() != null
+                        && savedPedido.getTotalPedido() == 7.0));
     }
 }
