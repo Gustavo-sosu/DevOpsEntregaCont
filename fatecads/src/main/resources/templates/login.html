@@ -16,7 +16,7 @@
 
             <p class="eyebrow">Acesso seguro</p>
             <h1 id="login-title" class="auth-title">Entrar no sistema</h1>
-            <p class="auth-subtitle">Use seu login cadastrado para acessar o painel academico.</p>
+            <p class="auth-subtitle">Administradores acessam as telas do sistema. Usuarios comuns podem entrar, mas nao possuem permissao para os cadastros.</p>
 
             <form class="auth-form" th:action="@{/login}" method="post">
                 <div class="field">
@@ -31,10 +31,12 @@
 
                 <p class="status-alert status-alert-error" th:if="${param.error}">Credenciais invalidas.</p>
                 <p class="status-alert status-alert-success" th:if="${param.logout}">Voce saiu do sistema.</p>
+                <p class="status-alert status-alert-success" th:if="${param.cadastro}">Cadastro realizado. Entre com seu login.</p>
 
                 <div class="auth-actions">
                     <button class="button button-primary" type="submit">Entrar</button>
-                    <a class="button" href="/fatecads">Voltar para a pagina inicial</a>
+                    <a class="button" href="/cadastro">Criar conta</a>
+                    <a class="button" href="/">Voltar</a>
                 </div>
             </form>
         </section>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css?v=cloud-20260518">
+    <title>Detalhes do pedido</title>
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/">
+                <span class="brand-mark">ADS</span>
+                <span>Sistema Fatec ADS</span>
+            </a>
+            <nav class="nav" aria-label="Navegacao administrativa">
+                <a href="/home">Painel</a>
+                <a href="/pedido/listar" aria-current="page">Pedidos</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="button" type="submit">Sair</button>
+                </form>
+            </nav>
+        </header>
+
+        <section class="page-header" th:if="${pedido != null}">
+            <div>
+                <p class="eyebrow">Gestao comercial</p>
+                <h1 class="page-title">Pedido <span th:text="${'#' + pedido.idPedido}">#0</span></h1>
+                <p class="page-subtitle">Cliente: <strong th:text="${pedido.usuario != null ? pedido.usuario.nomeUsuario : 'Usuario nao informado'}">Cliente</strong> · Data: <strong th:text="${pedido.dataPedido}">Data</strong></p>
+            </div>
+            <a class="button" href="/pedido/listar">Voltar aos pedidos</a>
+        </section>
+
+        <section class="panel" th:if="${pedido != null}">
+            <div class="panel-header">
+                <div>
+                    <h2 class="panel-title">Produtos do pedido</h2>
+                    <p class="panel-caption" th:text="${(pedido.itens != null ? #lists.size(pedido.itens) : 0) + ' produto(s)'}">0 produtos</p>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Preco unitario</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="item : ${pedido.itens}">
+                            <td th:text="${item.produto != null ? item.produto.descricaoProduto : 'Produto indisponivel'}">Produto</td>
+                            <td th:text="${item.quantidade}">0</td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(item.preco != null ? item.preco : 0, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(item.subtotal != null ? item.subtotal : 0, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="order-total">
+                <span>Total do pedido</span>
+                <strong th:text="${'R$ ' + #numbers.formatDecimal(pedido.totalPedido != null ? pedido.totalPedido : 0, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</strong>
+            </div>
+        </section>
+
+        <section class="panel form-panel" th:if="${pedido == null}">
+            <h1 class="panel-title">Pedido nao encontrado</h1>
+            <p class="page-subtitle">O pedido solicitado nao existe ou nao esta mais disponivel.</p>
+            <a class="button" href="/pedido/listar">Voltar aos pedidos</a>
+        </section>
+    </main>
+</body>
+</html>

@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -31,12 +30,9 @@ public class Pedido {
 
     private Double totalPedido;
 
-    @Lob
-    private String imagemPedido;
-
     @ManyToOne
-    @JoinColumn(name = "idAluno_fk")
-    private Aluno aluno;
+    @JoinColumn(name = "idUsuario_fk")
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<ItemDoPedido> itens;

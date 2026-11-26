@@ -34,6 +34,9 @@ public class Produto {
     @Column(nullable = false, length = 30)
     private String marcaProduto;
 
+    @Column(columnDefinition = "TEXT")
+    private String imagemProduto;
+
     @OneToMany(mappedBy = "produto")
     private List<ItemDoPedido> itens;
 }

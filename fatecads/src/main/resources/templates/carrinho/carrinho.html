@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css?v=product-image-20260928">
+    <title>Meu carrinho</title>
+</head>
+<body>
+    <main class="app-shell">
+        <header class="topbar">
+            <a class="brand" href="/produto/listar"><span class="brand-mark">ADS</span><span>Meu carrinho</span></a>
+            <nav class="nav" aria-label="Navegacao do carrinho">
+                <a href="/produto/listar">Continuar comprando</a>
+                <form th:action="@{/logout}" method="post"><button class="button" type="submit">Sair</button></form>
+            </nav>
+        </header>
+        <section class="page-header">
+            <div>
+                <p class="eyebrow">Resumo da compra</p>
+                <h1 class="page-title">Carrinho</h1>
+                <p class="page-subtitle">Confira os itens selecionados e o preco final.</p>
+            </div>
+        </section>
+        <section class="panel" th:if="${!#lists.isEmpty(itens)}">
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Produto</th><th>Quantidade</th><th>Preco unitario</th><th>Subtotal</th><th></th></tr></thead>
+                    <tbody>
+                        <tr th:each="item : ${itens}">
+                            <td class="cart-product-cell">
+                                <img th:if="${item.produto.imagemProduto != null and !#strings.isEmpty(item.produto.imagemProduto)}"
+                                     class="product-image-thumb" th:src="${item.produto.imagemProduto}" alt="">
+                                <span th:text="${item.produto.descricaoProduto}">Produto</span>
+                            </td>
+                            <td th:text="${item.quantidade}">1</td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(item.produto.valorProduto, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(item.subtotal, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                            <td><form th:action="@{/carrinho/remover/{id}(id=${item.produto.idProduto})}" method="post"><button class="button button-danger" type="submit">Remover</button></form></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-header">
+                <h2>Preco final: <span th:text="${'R$ ' + #numbers.formatDecimal(total, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</span></h2>
+                <form th:action="@{/carrinho/limpar}" method="post"><button class="button button-danger" type="submit">Limpar carrinho</button></form>
+            </div>
+        </section>
+        <section class="panel empty-state" th:if="${#lists.isEmpty(itens)}">Seu carrinho esta vazio. <a href="/produto/listar">Ver produtos</a></section>
+    </main>
+</body>
+</html>

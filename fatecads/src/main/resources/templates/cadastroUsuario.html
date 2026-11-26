@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/app.css?v=cloud-20260518">
+    <title>Criar conta</title>
+</head>
+<body>
+    <main class="auth-shell">
+        <section class="panel auth-card" aria-labelledby="cadastro-title">
+            <a class="brand" href="/">
+                <span class="brand-mark">ADS</span>
+                <span>Sistema Fatec ADS</span>
+            </a>
+
+            <p class="eyebrow">Novo acesso</p>
+            <h1 id="cadastro-title" class="auth-title">Criar conta</h1>
+            <p class="auth-subtitle">Cadastre seus dados e escolha o perfil de acesso ao sistema.</p>
+
+            <form class="auth-form" th:action="@{/cadastro/salvar}" th:object="${usuario}" method="post">
+                <div class="field">
+                    <label for="nomeUsuario">Nome</label>
+                    <input id="nomeUsuario" type="text" th:field="*{nomeUsuario}" autocomplete="name" required>
+                </div>
+                <div class="field">
+                    <label for="emailUsuario">Email</label>
+                    <input id="emailUsuario" type="email" th:field="*{emailUsuario}" autocomplete="email" required>
+                </div>
+                <div class="field">
+                    <label for="loginUsuario">Login</label>
+                    <input id="loginUsuario" type="text" th:field="*{loginUsuario}" autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <label for="senhaUsuario">Senha</label>
+                    <input id="senhaUsuario" type="password" th:field="*{senhaUsuario}" autocomplete="new-password" minlength="6" required>
+                </div>
+                <div class="field">
+                    <label for="role">Perfil</label>
+                    <select id="role" th:field="*{role}" required>
+                        <option value="ROLE_USER">Usuario</option>
+                        <option value="ROLE_ADMIN">Administrador</option>
+                    </select>
+                </div>
+                <div class="auth-actions">
+                    <button class="button button-primary" type="submit">Cadastrar</button>
+                    <a class="button" href="/login">Voltar para login</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

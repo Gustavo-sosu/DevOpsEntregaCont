@@ -1,34 +1,93 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="/css/app.css?v=product-image-20260928">
+    <title>Produtos disponiveis</title>
 </head>
 <body>
-    <h1 style="text-align: center;">Lista de Produtos</h1>
-    <h2 style="text-align: center;">
-        <a th:href="@{/produto/criar}">Adicionar Novo Produto</a>
-    </h2>
-    <table>
-        <tr>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Unidade</th>
-            <th>Marca</th>
-        </tr>
-        <tr th:each="produto : ${produtos}">
-            <td th:text="${produto.descricaoProduto}"></td>
-            <td th:text="${produto.valorProduto}"></td>
-            <td th:text="${produto.unidadeMedida}"></td>
-            <td th:text="${produto.marcaProduto}"></td>
-
-            <td>
-                <a th:href="@{/produto/editar/{id}(id=${produto.idProduto})}">Editar</a>
-                <a th:href="@{/produto/excluir/{id}(id=${produto.idProduto})}">Excluir</a>
-            </td>
-        </tr>
-    </table>
-    
+    <main class="app-shell">
+        <header class="topbar" th:if="${admin}">
+            <a class="brand" href="/home"><span class="brand-mark">ADS</span><span>Sistema Fatec ADS</span></a>
+            <nav class="nav" aria-label="Navegacao administrativa">
+                <a href="/home">Painel</a>
+                <a href="/produto/listar" aria-current="page">Produtos</a>
+                <form th:action="@{/logout}" method="post"><button class="button" type="submit">Sair</button></form>
+            </nav>
+        </header>
+        <header class="topbar" th:if="${!admin}">
+            <a class="brand" href="/produto/listar"><span class="brand-mark">ADS</span><span>Produtos</span></a>
+            <nav class="nav" aria-label="Navegacao principal">
+                <a href="/produto/listar" aria-current="page">Catalogo</a>
+                <a href="/carrinho">Carrinho</a>
+                <a th:if="${admin}" href="/home">Painel admin</a>
+                <form th:action="@{/logout}" method="post"><button class="button" type="submit">Sair</button></form>
+            </nav>
+        </header>
+        <section class="page-header" th:if="${admin}">
+            <div>
+                <p class="eyebrow">Gestao administrativa</p>
+                <h1 class="page-title">Lista de Produtos</h1>
+                <p class="page-subtitle">Cadastre e mantenha os produtos disponiveis.</p>
+            </div>
+            <a class="button button-primary" href="/produto/criar">Adicionar novo produto</a>
+        </section>
+        <section class="panel" th:if="${admin}">
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Imagem</th><th>Descricao</th><th>Valor</th><th>Unidade</th><th>Marca</th><th>Acoes</th></tr></thead>
+                    <tbody>
+                        <tr th:each="produto : ${produtos}">
+                            <td>
+                                <img th:if="${produto.imagemProduto != null and !#strings.isEmpty(produto.imagemProduto)}"
+                                     class="product-image-thumb" th:src="${produto.imagemProduto}" alt="Imagem do produto">
+                                <span th:if="${produto.imagemProduto == null or #strings.isEmpty(produto.imagemProduto)}">Sem imagem</span>
+                            </td>
+                            <td th:text="${produto.descricaoProduto}">Produto</td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(produto.valorProduto, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                            <td th:text="${produto.unidadeMedida}">UN</td>
+                            <td th:text="${produto.marcaProduto}">Marca</td>
+                            <td class="actions">
+                                <a class="button" th:href="@{/produto/editar/{id}(id=${produto.idProduto})}">Editar</a>
+                                <a class="button button-danger" th:href="@{/produto/excluir/{id}(id=${produto.idProduto})}">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="empty-state" th:if="${#lists.isEmpty(produtos)}">Nenhum produto cadastrado.</div>
+        </section>
+        <section class="page-header" th:if="${!admin}">
+            <div>
+                <p class="eyebrow">Catalogo</p>
+                <h1 class="page-title">Produtos disponiveis</h1>
+                <p class="page-subtitle">Veja os detalhes dos produtos e adicione os itens desejados ao carrinho.</p>
+            </div>
+            <div class="actions">
+                <a class="button button-primary" href="/carrinho">Abrir carrinho</a>
+            </div>
+        </section>
+        <section class="grid-menu" aria-label="Produtos" th:if="${!admin}">
+            <article class="menu-card" th:each="produto : ${produtos}">
+                <img th:if="${produto.imagemProduto != null and !#strings.isEmpty(produto.imagemProduto)}"
+                     class="product-card-image" th:src="${produto.imagemProduto}" alt="Imagem do produto">
+                <div>
+                    <p class="eyebrow" th:text="${produto.marcaProduto}">Marca</p>
+                    <h2 class="panel-title" th:text="${produto.descricaoProduto}">Produto</h2>
+                    <p class="page-subtitle" th:text="${produto.unidadeMedida}">UN</p>
+                </div>
+                <strong class="page-title" th:text="${'R$ ' + #numbers.formatDecimal(produto.valorProduto, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</strong>
+                <div class="actions">
+                    <a class="button" th:href="@{/produto/detalhes/{id}(id=${produto.idProduto})}">Ver detalhes</a>
+                    <form th:action="@{/carrinho/adicionar/{id}(id=${produto.idProduto})}" method="post">
+                        <input type="hidden" name="quantidade" value="1">
+                        <button class="button button-primary" type="submit">Adicionar</button>
+                    </form>
+                </div>
+            </article>
+        </section>
+        <div class="empty-state" th:if="${!admin and #lists.isEmpty(produtos)}">Nenhum produto disponivel no momento.</div>
+    </main>
 </body>
 </html>
