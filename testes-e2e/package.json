@@ -1,0 +1,16 @@
+{
+  "name": "fatecads-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Testes End-to-End com Playwright para o cadastro de produtos do sistema Fatec ADS",
+  "scripts": {
+    "test": "playwright test",
+    "test:cadastro": "playwright test tests/cadastro-produto.spec.js --grep \"cadastro de produto\"",
+    "test:headed": "playwright test --headed",
+    "install:browsers": "playwright install chromium",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1"
+  }
+}
